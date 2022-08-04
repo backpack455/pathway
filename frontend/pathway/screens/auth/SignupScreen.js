@@ -7,7 +7,9 @@ let firebaseConfig = Firebasekeys;
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
-const auth = firebase.auth();
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+
+const auth = getAuth();
 
 const themecolor = '#fff'
 const tabcolor = '#00BFA8'
@@ -18,22 +20,30 @@ export default class SignupScreen extends React.Component{
         password: "",
         errorMessage: null,
     }
-    handleSignUp = () => { 
-        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-        .then(userCredentials => {
-            return userCredentials.user.updateProfile({
-                displayName: this.state.name
+    handleSubmit = async ({ email, password, fullName }) => {
+        try {
+          firebase
+            .auth()
+            .createUserWithEmailAndPassword(this.state.email, this.state.password)
+            .then((userCredentials) => {
+              return userCredentials.user.updateProfile({
+                displayName: fullName,
+              });
             })
-        })
-        .catch (error => this.setState({errorMessage: error.message}))
-        firebase.auth().onAuthStateChanged(function(user) {
+            .catch((error) => this.setState({errorMessage: error.message}));
+          firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
-                console.log('user is signed in')
+              console.log("user is signed in");
             } else {
-                console.log('user is not signed in')
+              console.log("user is not signed in");
+              errorMessage = true;
             }
-            });
-    }
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
     render(){
         return(
             <KeyboardAvoidingView style={{flex: 1, backgroundColor: '#fff'}} behavior={Platform.OS === "ios" ? "padding" : null}>

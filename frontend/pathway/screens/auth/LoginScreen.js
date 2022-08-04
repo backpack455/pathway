@@ -7,7 +7,10 @@ let firebaseConfig = Firebasekeys;
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
-const auth = firebase.auth();
+
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
+const auth = getAuth();
 
 const tabcolor = '#00BFA8'
 export default class LoginScreen extends React.Component{
@@ -16,20 +19,37 @@ export default class LoginScreen extends React.Component{
         password: "",
         errorMessage: null,
     }
-    handleLogin = () => {
+    handleLogin = async () => {
         const {email, password} = this.state
-            auth().
-            signInWithEmailAndPassword(email, password)
-            .catch(error=> this.setState({errorMessage: error.message}))
-            firebase.auth().onAuthStateChanged(function(user) {
-                if (user) {
-                 console.log('user is signed in')
+        try {
+          firebase
+            .auth()
+            .signInWithEmailAndPassword(email, password)
+            .catch((error) => this.setState({errorMessage: error.message}));
+          firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+              console.log("user is signed in");
+            } else {
+              console.log("user is not signed in");
+            }
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      };
+    // handleLogin = () => {
+    //     const {email, password} = this.state
+    //         signInWithEmailAndPassword(email, password)
+    //         .catch((error)=> this.setState({errorMessage: error.message}))
+    //         firebase.auth().onAuthStateChanged(function(user) {
+    //             if (user) {
+    //              console.log('user is signed in')
                  
-                } else {
-                 console.log('user is not signed in')
-                }
-              });
-    }
+    //             } else {
+    //              console.log('user is not signed in')
+    //             }
+    //           });
+    // }
     render(){
         LayoutAnimation.easeInEaseOut()
         return(
