@@ -13,9 +13,10 @@ import LoginScreen from "./screens/auth/LoginScreen";
 import SignupScreen from "./screens/auth/SignupScreen";
 import SplashScreen from "./screens/auth/SplashScreen";
 
-import * as firebase from "firebase";
-
-import "firebase/firestore";
+// v9 compat packages are API compatible with v8 code
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
 
 import Firebasekeys from './config'
 let firebaseConfig = Firebasekeys;
@@ -23,13 +24,16 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
+
+
 const inactiveColor = "#8E8E8E";
-const themecolor = "#2B2D2F";
-const tabcolor = "#FF5349";
+const themecolor = "#00BFA8";
+const tabcolor = "#fff";
 const Tab = createMaterialBottomTabNavigator();
 const Home = createStackNavigator();
 const TherapyRecomender = createStackNavigator();
 const TherapyFinder = createStackNavigator();
+const Auth = createStackNavigator();
 
 const TherapyRecomenderScreens = ({ navigation }) => {
   return (
@@ -117,11 +121,11 @@ function MainTabs() {
         sceneAnimationEnabled="true"
         activeColor={tabcolor}
         inactiveColor={inactiveColor}
-        barStyle={{ backgroundColor: `${themecolor}`, height: HP(8.89) }}
+        barStyle={{ backgroundColor: `${themecolor}`}}
         shifting={true}
       >
         <Tab.Screen
-          name="Home Nav"
+          name="Home"
           component={HomeScreens}
           options={{
             tabBarIcon: ({ focused }) => (
@@ -134,12 +138,12 @@ function MainTabs() {
           }}
         />
         <Tab.Screen
-          name="Therapy Finder Nav"
+          name="Therapy Finder"
           component={TherapyFinderScreens}
           options={{
             tabBarIcon: ({ focused }) => (
-              <MaterialCommunityIcons
-                name="fire"
+              <FontAwesome5
+              name="search-location"
                 size={24}
                 color={focused ? tabcolor : inactiveColor}
               />
@@ -147,12 +151,12 @@ function MainTabs() {
           }}
         />
         <Tab.Screen
-          name="Therapy Recomender Nav"
+          name="Therapy Recomender"
           component={TherapyRecomenderScreens}
           options={{
             tabBarIcon: ({ focused }) => (
               <FontAwesome5
-                name="newspaper"
+                name="hands-helping"
                 size={23}
                 color={focused ? tabcolor : inactiveColor}
               />
