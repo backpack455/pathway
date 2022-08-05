@@ -12,7 +12,7 @@ import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "fir
 const auth = getAuth();
 
 const themecolor = '#fff'
-const tabcolor = '#00BFA8'
+const tabcolor = '#28407E'
 export default class SignupScreen extends React.Component{
     state= {
         name: "",

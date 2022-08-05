@@ -12,7 +12,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const auth = getAuth();
 
-const tabcolor = '#00BFA8'
+const tabcolor = '#28407E'
 export default class LoginScreen extends React.Component{
     state= {
         email: "",

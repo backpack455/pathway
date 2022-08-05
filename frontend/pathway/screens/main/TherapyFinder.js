@@ -3,7 +3,7 @@ import { Image, ScrollView, View, StyleSheet, StatusBar, Linking, FlatList, Text
   TouchableOpacity} from 'react-native'
 import {Icon, NativeBaseProvider} from 'native-base';
 import {AntDesign, Fontisto, Feather} from "@expo/vector-icons"
-const themecolor = '#00BFA8'
+const themecolor = '#28407E'
 
 const Face = ({icon, title, color, full}) => {
   return (

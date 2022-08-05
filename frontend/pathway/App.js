@@ -28,7 +28,7 @@ if (!firebase.apps.length) {
 
 
 const inactiveColor = "#8E8E8E";
-const themecolor = "#00BFA8";
+const themecolor = "#28407E";
 const tabcolor = "#fff";
 const Tab = createMaterialBottomTabNavigator();
 const Home = createStackNavigator();

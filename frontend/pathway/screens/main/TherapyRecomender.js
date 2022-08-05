@@ -12,7 +12,8 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { IconButton } from "react-native-paper";
-const themecolor = '#00BFA8'
+import { theme } from "native-base";
+const themecolor = '#28407E'
 
 export default App = ({navigation}) => {
   const [mapRoutingActive, setMapRoutingActive] = useState();
@@ -29,17 +30,20 @@ export default App = ({navigation}) => {
       <View style={styles.search}>
         <TextInput
           placeholder="Type your concern"
-          placeholderTextColor="#000"
+          placeholderTextColor="#fff"
           style={styles.searchBarInput}
           onChangeText={(text) => setDilemna(text)}
         />
         <IconButton
           icon="check"
-          color="#00BFA8"
+          color="#fff"
           size={20}
           style={{ bottom: 5, left: 30 }}
           onPress={() => navigation.navigate('Therapy Response Screen')}
         />
+      </View>
+      <View style={styles.response}>
+
       </View>
       <StatusBar style="light" />
     </View>
@@ -60,7 +64,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 40,
     flexDirection: "row",
-    backgroundColor: "#fff",
+    backgroundColor: `${themecolor}`,
     alignSelf: "center",
     borderRadius: 12,
     borderColor: `#000`,
@@ -72,4 +76,7 @@ const styles = StyleSheet.create({
     height: hp(6),
     paddingLeft: hp(3.5),
   },
+  response: {
+    
+  }
 });
