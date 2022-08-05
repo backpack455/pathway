@@ -7,6 +7,7 @@ import {
   FontAwesome5,
 } from "@expo/vector-icons";
 import HomePage from "./screens/main/Home";
+import TherapyResponseScreen from "./screens/main/TherapyResponse";
 import TherapyFinderPage from "./screens/main/TherapyFinder";
 import TherapyRecomenderPage from "./screens/main/TherapyRecomender";
 import LoginScreen from "./screens/auth/LoginScreen";
@@ -53,6 +54,13 @@ const TherapyRecomenderScreens = ({ navigation }) => {
       <TherapyRecomender.Screen
         name="Therapy Recommender Screen"
         component={TherapyRecomenderPage}
+        options={{
+          headerBackTitleVisible: false,
+        }}
+      />
+      <TherapyRecomender.Screen
+        name="Therapy Response Screen"
+        component={TherapyResponseScreen}
         options={{
           headerBackTitleVisible: false,
         }}
