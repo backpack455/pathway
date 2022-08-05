@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   bubble: {
     alignItems: "center",
     width: wp(70),
-    height: hp(60),
+    height: hp(70),
     margin: 8,
     borderRadius: 20,
     shadowRadius: 10,

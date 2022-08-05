@@ -13,6 +13,7 @@ import TherapyRecomenderPage from "./screens/main/TherapyRecomender";
 import LoginScreen from "./screens/auth/LoginScreen";
 import SignupScreen from "./screens/auth/SignupScreen";
 import SplashScreen from "./screens/auth/SplashScreen";
+import QuoteGeneratorPage from './screens/main/QuoteGenerator'
 
 // v9 compat packages are API compatible with v8 code
 import firebase from 'firebase/compat/app';
@@ -20,6 +21,8 @@ import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
 import Firebasekeys from './config'
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { theme } from "native-base";
 let firebaseConfig = Firebasekeys;
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
@@ -31,7 +34,8 @@ const inactiveColor = "#8E8E8E";
 const themecolor = "#28407E";
 const tabcolor = "#fff";
 const Tab = createMaterialBottomTabNavigator();
-const Home = createStackNavigator();
+const Home = createMaterialTopTabNavigator();
+const Motivation = createStackNavigator();
 const TherapyRecomender = createStackNavigator();
 const TherapyFinder = createStackNavigator();
 const Auth = createStackNavigator();
@@ -43,6 +47,7 @@ const TherapyRecomenderScreens = ({ navigation }) => {
         headerShown: true,
         headerStyle: {
           backgroundColor: themecolor,
+          marginTop: 20
         },
         headerTintColor: "#fff",
         headerTitleStyle: {
@@ -69,27 +74,75 @@ const TherapyRecomenderScreens = ({ navigation }) => {
   );
 };
 
-const HomeScreens = ({ navigation }) => {
+
+const Homes = () => {
   return (
-    <Home.Navigator
+    <Motivation.Navigator
       screenOptions={{
-        headerShown: false,
+        headerShown: true,
         headerStyle: {
           backgroundColor: themecolor,
+          marginTop: 20
         },
         headerTintColor: "#fff",
         headerTitleStyle: {
           color: "#fff",
         },
       }}
-      initialRouteName="Home Page"
+      initialRouteName="Dashboard"
     >
-      <Home.Screen
-        name="Home Page"
-        component={HomePage}
+      <Motivation.Screen
+        name="Dashboard"
+        component={HomeScreens}
         options={{
           headerBackTitleVisible: false,
         }}
+      />
+    </Motivation.Navigator>
+  );
+};
+// function Homes() {
+//   return (
+//       <Motivation.Navigator initialRouteName="Dashboard">
+//         <Motivation.Screen name="Dashboard" component={HomePage} 
+//          screenOptions={{
+//           headerShown: true,
+//           headerStyle: {
+//             backgroundColor: themecolor,
+//             marginTop: 20
+//           },
+//           headerTintColor: "#fff",
+//           headerTitleStyle: {
+//             color: "#fff",
+//           },
+//         }}
+//         />
+//       </Motivation.Navigator>
+//   );
+// }
+
+const HomeScreens = ({ navigation }) => {
+  return (
+    <Home.Navigator
+      initialRouteName="Home Screen"
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#8E8E8E',
+          headerTintColor: '#fff',
+        },
+      }}
+    >
+      <Home.Screen
+        name="Home Screen"
+        component={HomePage}
+        options={{
+          headerTitle: "Home",
+
+        }}
+      />
+      <Home.Screen
+        name="Quote Generator"
+        component={QuoteGeneratorPage}
       />
     </Home.Navigator>
   );
@@ -133,8 +186,8 @@ function MainTabs() {
         shifting={true}
       >
         <Tab.Screen
-          name="Home"
-          component={HomeScreens}
+          name="Home Nav"
+          component={Homes}
           options={{
             tabBarIcon: ({ focused }) => (
               <MaterialCommunityIcons

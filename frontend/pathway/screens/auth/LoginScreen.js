@@ -56,7 +56,7 @@ export default class LoginScreen extends React.Component{
             <KeyboardAvoidingView style={{flex: 1, backgroundColor: '#fff'}} behavior={Platform.OS === "ios" ? "padding" : null}>
                 <View style={StyleSheet.container}>
                     <StatusBar barStyle='dark-content'></StatusBar>
-                    <Image source={require('./../../assets/Pathway.png')} style={{marginTop: 100, alignSelf: "center", height: 100 ,width: 100,borderWidth: 1,borderColor: '#fee11a',borderRadius: 10}}/>
+                    <Image source={require('./../../assets/Pathway-2.png')} style={{marginTop: 100, alignSelf: "center", height: 100 ,width: 100,borderWidth: 1,borderColor: '#fee11a',borderRadius: 10}}/>
                     <Text style={styles.greeting}>{`Welcome back!\nSign in to get started`}</Text>
                     <View style={styles.errorMessage}>
                         {this.state.errorMessage && <Text style={styles.error}>{this.state.errorMessage}</Text>}
