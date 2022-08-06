@@ -15,7 +15,7 @@ export default function SplashScreen({ navigation }) {
     <View style={styles.container}>
       <View style={styles.SVGcontainer}>
         <Image
-          source={require("./../../assets/undraw_doctors.png")}
+          source={require("./../../assets/undraw_doctors2.png")}
           style={{ width: 430, height: 259 }}
         />
       </View>
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
   },
   button: {
-    backgroundColor: "#00BFA8",
+    backgroundColor: "#28407E",
     width: 300,
     height: 60,
     borderRadius: 15,

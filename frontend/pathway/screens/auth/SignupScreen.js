@@ -12,7 +12,7 @@ import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "fir
 const auth = getAuth();
 
 const themecolor = '#fff'
-const tabcolor = '#00BFA8'
+const tabcolor = '#28407E'
 export default class SignupScreen extends React.Component{
     state= {
         name: "",
@@ -51,7 +51,7 @@ export default class SignupScreen extends React.Component{
 
                 <StatusBar barStyle='dark-content'></StatusBar>
 
-                <Image source={require('./../../assets/Pathway.png')} style={{marginTop: 100, alignSelf: "center", height: 100 ,width: 100,borderWidth: 1,borderColor: `${tabcolor}`,borderRadius: 10}}/>
+                <Image source={require('./../../assets/Pathway-2.png')} style={{marginTop: 100, alignSelf: "center", height: 100 ,width: 100,borderWidth: 1,borderColor: `${tabcolor}`,borderRadius: 10}}/>
                 
                 <Text style={styles.greeting}>{`Hello!\nSign up and get started.`}</Text>
 
