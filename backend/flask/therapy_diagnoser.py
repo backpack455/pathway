@@ -38,6 +38,7 @@ class therapy_diagnoser:
         
         #diagnoser args
         self.CATEGORIES = ["Behaviorial", "Body Image", "Grief", "Relationship", "Depression", "Physical"]
+        
         self.behaviorial_keywords = ["sleep", "ocd", "anxiety", "control", "mood", "behavior", "uncontrollable", "anger", "compulsory"]
         self.body_image_keywords = ["fat", "skinny", "obese", "ugly", "acne", "unpopular", "body", "eating", "drinking", "weight"]
         self.grief_keywords = ["grief", "loss", "sadness", "death", "regret", "shock", "denial", "disbelief", "overwhelmed"]
@@ -135,7 +136,7 @@ class therapy_diagnoser:
 
 
         category_similarity_scores = {
-            'behaviorial'  : 0,
+            'behavioral'  : 0,
             'body_image'   : 0,
             'grief'        : 0,
             'relationship' : 0,
@@ -144,7 +145,7 @@ class therapy_diagnoser:
         }
 
         for i in behaviorial_similiarity:
-            category_similarity_scores['behaviorial']  += i[0][1] + i[1][1] #The score for input word to top 2 keywords. Example Keeps = bheavior + sleep = 0.3.
+            category_similarity_scores['behavioral']  += i[0][1] + i[1][1] #The score for input word to top 2 keywords. Example Keeps = bheavior + sleep = 0.3.
         for i in body_image_similiarity:
             category_similarity_scores['body_image']   += i[0][1] + i[1][1]
         for i in grief_similiarity:
