@@ -34,7 +34,7 @@ class therapy_diagnoser(Resource):
         link, unviewed_links = find_recommended_link(category[0], user_input['userRatingId'])
      
         
-        return {"category diagnosis": f"{category[0]}", "sentiment_analysis": f"{sentiment}", "recommendeed_link": f"{link}", "unviewed_links": f"{unviewed_links}"}
+        return {"category_diagnosis": f"{category[0]}", "sentiment_analysis": f"{sentiment}", "recommendeed_link": f"{link}", "unviewed_links": f"{unviewed_links}"}
     
 
 
