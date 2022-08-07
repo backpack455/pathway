@@ -44,7 +44,7 @@ export default function App({navigation}) {
   const handleInput = () => {
     
     const userId = firebase.auth().currentUser.uid
-    fetch('https://localhost:3001', {
+    fetch('https://localhost:3001/diagnoser', {
       method: 'POST',
       headers: {
         'userRatingId': userId
@@ -86,7 +86,9 @@ export default function App({navigation}) {
                     <Text style={styles.otherText}>{response.category_diagnosis}</Text>
                 </View>
             </TouchableOpacity> */}
-            <TouchableOpacity activeOpacity={1}  onPress={() => navigation.navigate('Therapy Response Screen')}>
+            <TouchableOpacity activeOpacity={1}  onPress={() => navigation.navigate('Details', {
+            itemId: `${response.unviewed_links}`,
+          })}>
                 <View style={styles.lesserButton}>
                     <Text style={styles.otherText}>Sentiment Analysis: {response.sentiment_analysis.label} {response.sentiment_analysis.score}</Text>
                 </View>

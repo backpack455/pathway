@@ -4,6 +4,7 @@ import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
   } from "react-native-responsive-screen";
+import * as WebBrowser from 'expo-web-browser';
 import { Animated, Easing, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import {FontAwesome} from "@expo/vector-icons"
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
@@ -30,6 +31,10 @@ export default class TherapyResponse extends React.Component {
     //     animation: new Animated.Value(1)
     // }
 
+    submitFeedback = () => {
+        
+    }
+
     rate = star => {
         this.setState({rating: star})
     }
@@ -46,6 +51,9 @@ export default class TherapyResponse extends React.Component {
     }
 
     render () {
+
+        const {navigation } = this.props
+
         let stars = []
 
         const animateScale = this.state.animation.interpolate({
@@ -70,6 +78,7 @@ export default class TherapyResponse extends React.Component {
         }
 
         return (
+            
             <View style={styles.container}>
                 <View>
                     <View style={styles.bubble}>
@@ -80,12 +89,12 @@ export default class TherapyResponse extends React.Component {
                         <View style={{flexDirection: "row", alignItems: 'flex-end', padding: 20}}>
                             {stars}
                         </View>
-                        <TouchableOpacity activeOpacity={1}>
+                        <TouchableOpacity activeOpacity={1} onPress={() => WebBrowser.openBrowserAsync(``)}>
                             <View style={styles.loginButton}>
                                 <Text style={styles.whiteText}>Access Resource</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity activeOpacity={1}>
+                        <TouchableOpacity activeOpacity={1} onPress={this.submitFeedback(navigation.getParam('itemId', 'NO-ID'))}>
                             <View style={styles.loginButton}>
                                 <Text style={styles.whiteText} >Submit Feedback</Text>
                             </View>
