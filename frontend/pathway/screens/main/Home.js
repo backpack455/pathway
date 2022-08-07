@@ -5,7 +5,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { Animated, Easing, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Animated, Easing, StyleSheet, Text, TouchableOpacity, View, FlatList } from 'react-native';
 import {FontAwesome} from "@expo/vector-icons"
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 // v9 compat packages are API compatible with v8 code
@@ -22,6 +22,17 @@ export default function HomeScreen({navigation}) {
   const [loading, setLoading] = useState(true)
   const [users, setUsers] = useState([]);
 
+  const signOutUser = () => {
+    firebase.auth().signOut()
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            console.log('user is still signed in!!')
+        } else {
+            console.log('user is logged out!!')
+        }
+      });
+}
+
   useEffect(() => {
     firebase.firestore()
     .collection('Quote Post Board')
@@ -35,8 +46,9 @@ export default function HomeScreen({navigation}) {
       }
     querySnapshot.forEach(documentSnapshot => {
       users.push({
-        ...documentSnapshot.data()
-      })
+        ...documentSnapshot.data(),
+        key: documentSnapshot.id,
+      });
       console.log(documentSnapshot.data())
       console.log(documentSnapshot.data().author)
     })
@@ -53,19 +65,33 @@ export default function HomeScreen({navigation}) {
                     <View style={styles.bubble}>
                         <TouchableOpacity style={{flexDirection: 'row'}} onPress={() => navigation.navigate('Add a Quote')}>
                           <Text style={styles.title}>Daily Quote Board</Text>
-                          <MaterialIcons name="library-add" color={themecolor} size={32} style={{paddingTop: 40}}/>                                                  
+                          <MaterialIcons name="library-add" color={themecolor} size={32} style={{paddingTop: 40}}/>                                             
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{flexDirection: 'row'}} onPress={() => signOutUser()}>
+                          <MaterialIcons name="library-add" color={themecolor} size={32} style={{paddingTop: 40}}/>                                             
                         </TouchableOpacity>
                         <Text style={styles.text}>
                             This quote board contains reccomended quotes by other users, and can be manually inputted.
                         </Text>    
-                          {users.map((quoteData) => {
+                          {/* {users.map((quoteData) => {
                             <View>
                               <Text style={styles.title}>{quoteData.author}</Text>
                               <Text style={styles.text}>
                                   {quoteData.quote}
                               </Text>   
                             </View>
-                          })}                    
+                          })}                     */}
+                          <FlatList
+                          data={users}
+                          renderItem={({ item }) => (
+                            <View>
+                            <Text style={styles.otherTitle}>{item.author}</Text>
+                            <Text style={styles.text}>
+                                {item.quote}
+                            </Text>   
+                          </View>
+                          )}
+                        />
                     </View>
                     
                 </View>
@@ -95,11 +121,17 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     },
    title: {
-        fontSize: 26,
+        fontSize: 30,
         fontFamily: 'Avenir',
         padding: 20,
         fontWeight: 'bold'
     },
+    otherTitle: {
+      fontSize: 26,
+      fontFamily: 'Avenir',
+      padding: 20,
+      fontWeight: 'bold'
+  },
     text: {
         padding: 20,
         fontSize: 16,
