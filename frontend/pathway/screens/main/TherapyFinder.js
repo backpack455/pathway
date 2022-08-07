@@ -106,11 +106,11 @@ export default TherapyFinder = () => {
         <CardHome
           title=""
           info={{
-            name: 'Dr T Pay Dhar',
-            time: 'Pinnacle Dermitology',
-            address: 'Dermatologists',
+            name: 'Dr T Lo Dhar',
+            time: 'Peak Therapy',
+            address: 'Therapist',
             rating: 4,
-            detail: 'Flint, MI 90293',
+            detail: 'Detroit, MI 90293',
           }}
         />
       </ScrollView>

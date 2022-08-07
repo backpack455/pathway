@@ -4,13 +4,16 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { Animated, Easing, StyleSheet, Text, TouchableOpacity, View, FlatList } from 'react-native';
+import { Animated, Easing, StyleSheet, Text, TouchableOpacity, View, FlatList, Alert, TextInput, RefreshControl} from 'react-native';
 import {Entypo, MaterialIcons} from "@expo/vector-icons"
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 // v9 compat packages are API compatible with v8 code
 import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
+import { getAuth } from "firebase/auth";
+// const auth = getAuth();
+// const user = auth.currentUser;
+import {doc, setDoc} from 'firebase/compat/firestore';
+
 
 const category = '33'
 const themecolor = '#28407E'
@@ -20,6 +23,36 @@ let pending = true
 export default function HomeScreen({navigation}) {
   const [loading, setLoading] = useState(true)
   const [users, setUsers] = useState([]);
+  const [inputted, setInputted] = useState();
+
+  const showAlert = () =>
+  Alert.prompt(
+    'Alert Title',
+    'Please enter',
+    [
+      {
+        text: 'Cancel',
+        onPress: () => Alert.alert('Cancel Pressed'),
+        style: 'cancel',
+      },
+    ],
+    {
+      cancelable: true,
+      onDismiss: () =>
+        Alert.alert('This alert was dismissed by tapping outside of the alert dialog.'),
+    }
+  );
+
+
+  const uploadText = async() => {
+    firebase.firestore()
+    .collection('Quote Post Board')
+    .add({
+      // name: `${user.displayName}`,
+      quote: `${inputted}`
+    })
+    setInputted('')
+  }
 
   const signOutUser = () => {
     firebase.auth().signOut()
@@ -31,6 +64,40 @@ export default function HomeScreen({navigation}) {
         }
       });
 }
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
+
+
+const [refreshing, setRefreshing] = React.useState(false);
+
+const onRefresh = React.useCallback(async () => {
+  setRefreshing(true);
+  firebase.firestore()
+    .collection('Quote Post Board')
+    .get()
+    .then(querySnapshot => {
+      // console.log(querySnapshot.data())
+      const users = []
+      if(querySnapshot.size > 0)
+      {
+       pending = false
+      }
+    querySnapshot.forEach(documentSnapshot => {
+      users.push({
+        ...documentSnapshot.data(),
+        key: documentSnapshot.id,
+      });
+      console.log(documentSnapshot.data())
+      console.log(documentSnapshot.data().author)
+    })
+    setUsers(users);
+    console.log(users.author)
+    setLoading(false);
+    })
+
+    wait(2000).then(() => setRefreshing(false))
+}, []);
 
   useEffect(() => {
     firebase.firestore()
@@ -62,17 +129,26 @@ export default function HomeScreen({navigation}) {
       <View style={styles.container}>
                 <View>
                     <View style={styles.bubble}>
-                        <TouchableOpacity style={{flexDirection: 'row'}} onPress={() => navigation.navigate('Add a Quote')}>
+                        <View style={{flexDirection: 'row'}}>
                           <Text style={styles.title}>Daily Quote Board</Text>
+                          <TouchableOpacity style={{flexDirection: 'row', alignContent: 'center'}} onPress={() => uploadText()}>
                           <MaterialIcons name="library-add" color={themecolor} size={32} style={{paddingTop: 40}}/>                                             
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{flexDirection: 'row', alignContent: 'center'}} onPress={() => signOutUser()}>
+                          </TouchableOpacity>
+                        </View>
+                        <TextInput
+                          editable
+                          maxLength={70}
+                          onChangeText={(text) => setInputted(text)}
+                          placeholder="Add your quote followed by the writer"
+                          placeholderTextColor="#8E8E8E"
+                          style={styles.searchBarInput}
+                          selectionColor='#000'
+                          defaultValue={inputted}
+                        />
+                        {/* <TouchableOpacity style={{flexDirection: 'row', alignContent: 'center'}} onPress={() => signOutUser()}>
                           <Text style={styles.text}>Sign Out</Text>
                           <Entypo name="log-out" color={themecolor} size={18} style={{paddingTop: 40}}/>                                             
-                        </TouchableOpacity>
-                        <Text style={styles.text}>
-                            This quote board contains reccomended quotes by other users, and can be manually inputted.
-                        </Text>    
+                        </TouchableOpacity>   */}
                           {/* {users.map((quoteData) => {
                             <View>
                               <Text style={styles.title}>{quoteData.author}</Text>
@@ -81,17 +157,21 @@ export default function HomeScreen({navigation}) {
                               </Text>   
                             </View>
                           })}                     */}
+                          <ScrollView refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
                           <FlatList
                           data={users}
                           renderItem={({ item }) => (
                             <View>
-                            <Text style={styles.otherTitle}>{item.author}</Text>
+                            <Text style={styles.otherTitle}></Text>
                             <Text style={styles.text}>
-                                {item.quote}
+                                {item.quote} - {item.author}
                             </Text>   
                           </View>
                           )}
                         />
+                        </ScrollView>
                     </View>
                     
                 </View>
@@ -153,5 +233,22 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontFamily: 'Avenir',
         color: '#fff'
-    }
+    },
+    search: {
+      flex: 1,
+      position: "absolute",
+      top: 40,
+      flexDirection: "row",
+      backgroundColor: `${themecolor}`,
+      alignSelf: "center",
+      borderRadius: 12,
+      borderColor: `#000`,
+      padding: 10,
+      shadowColor: "#000",
+      shadowRadius: 15,
+      justifyContent: "center",
+      width: wp(80),
+      height: hp(6),
+      paddingLeft: hp(3.5),
+    },
 });

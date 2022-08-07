@@ -14,7 +14,6 @@ import LoginScreen from "./screens/auth/LoginScreen";
 import SignupScreen from "./screens/auth/SignupScreen";
 import SplashScreen from "./screens/auth/SplashScreen";
 import QuoteGeneratorPage from './screens/main/QuoteGenerator'
-import AddQuotePage from './screens/main/AddQuotePage'
 
 // v9 compat packages are API compatible with v8 code
 import firebase from 'firebase/compat/app';
@@ -39,39 +38,6 @@ const Motivation = createStackNavigator();
 const TherapyRecomender = createStackNavigator();
 const TherapyFinder = createStackNavigator();
 const Auth = createStackNavigator();
-
-// const Quotes = () => {
-//   return (
-//     <QuoteStack.Navigator
-//       screenOptions={{
-//         headerShown: false,
-//         headerStyle: {
-//           backgroundColor: themecolor,
-//         },
-//         headerTintColor: "#fff",
-//         headerTitleStyle: {
-//           color: "#fff",
-//         },
-//       }}
-//       initialRouteName="Dashboard"
-//     >
-//       <QuoteStack.Screen
-//         name="Dashboard"
-//         component={HomePage}
-//         options={{
-//           headerBackTitleVisible: false,
-//         }}
-//       />
-//       <QuoteStack.Screen
-//         name="Add a Quote"
-//         component={AddQuotePage}
-//         options={{
-//           headerBackTitleVisible: false,
-//         }}
-//       />
-//     </QuoteStack.Navigator>
-//   );
-// };
 
 const TherapyRecomenderScreens = ({ navigation }) => {
   return (
@@ -125,13 +91,6 @@ const Homes = () => {
       <Motivation.Screen
         name="Quotes"
         component={HomeScreens}
-        options={{
-          headerBackTitleVisible: false,
-        }}
-      />
-      <QuoteStack.Screen
-        name="Add a Quote"
-        component={AddQuotePage}
         options={{
           headerBackTitleVisible: false,
         }}
