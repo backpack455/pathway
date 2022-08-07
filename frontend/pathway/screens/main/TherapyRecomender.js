@@ -5,6 +5,7 @@ import {
   Text,
   ActivityIndicator,
   TextInput,
+  TouchableOpacity, FlatList
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import {
@@ -32,6 +33,7 @@ const user = auth.currentUser;
 export default function App({navigation}) {
   const [mapRoutingActive, setMapRoutingActive] = useState();
   const [dilemna, setDilemna] = useState();
+  const [response, setResponse] = useState()
 
   useEffect(() => {
     (async () => {
@@ -50,7 +52,7 @@ export default function App({navigation}) {
       body: {
         'user_input': dilemna
       }
-    }).then((response) => console.log(response))
+    }).then((response) => setResponse(response))
     .catch((error) => {
       console.log(error)
     })
@@ -77,7 +79,36 @@ export default function App({navigation}) {
         />
       </View>
       <View style={styles.response}>
-
+      {response ?
+      <View style={{flexDirection: 'row', marginTop: 125}}>  
+            {/* <TouchableOpacity activeOpacity={1}  onPress={() => navigation.navigate('Therapy Response Screen')}>
+                <View style={styles.lesserButton}>
+                    <Text style={styles.otherText}>{response.category_diagnosis}</Text>
+                </View>
+            </TouchableOpacity> */}
+            <TouchableOpacity activeOpacity={1}  onPress={() => navigation.navigate('Therapy Response Screen')}>
+                <View style={styles.lesserButton}>
+                    <Text style={styles.otherText}>Sentiment Analysis: {response.sentiment_analysis.label} {response.sentiment_analysis.score}</Text>
+                </View>
+            </TouchableOpacity> 
+        </View> : <Text></Text>}
+      {/* <FlatList
+        data={response}
+        renderItem={({ item }) => (
+          <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity activeOpacity={1}  onPress={() => navigation.navigate('Therapy Response Screen')}>
+                <View style={styles.lesserButton}>
+                    <Text style={styles.otherText}>Competition</Text>
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={1}  onPress={() => navigation.navigate('Therapy Response Screen')}>
+                <View style={styles.lesserButton}>
+                    <Text style={styles.otherText}>Happiness</Text>
+                </View>
+            </TouchableOpacity>
+        </View>
+        )}
+      /> */}
       </View>
       <StatusBar style="light" />
     </View>
@@ -112,5 +143,31 @@ const styles = StyleSheet.create({
   },
   response: {
     
-  }
+  },
+  otherText: {
+    padding: 20,
+    fontSize: 12,
+    fontFamily: 'Avenir',
+    color: '#fff'
+},
+  lesserButton: {
+    borderRadius: 12,
+    marginTop: hp(.37),
+    backgroundColor: `${themecolor}`,
+    height: hp(7.11),
+    width: wp(40),
+    marginRight: 10,
+    // width: hp
+    shadowOffset: { width: wp(0), height: wp(0.24) },
+    shadowColor: "black",
+    shadowOpacity: 0.25,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+whiteText: {
+    padding: 20,
+    fontSize: 16,
+    fontFamily: 'Avenir',
+    color: '#fff'
+}
 });
