@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { StatusBar } from 'expo-status-bar';
-import {MaterialIcons} from "@expo/vector-icons"
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Animated, Easing, StyleSheet, Text, TouchableOpacity, View, FlatList } from 'react-native';
-import {FontAwesome} from "@expo/vector-icons"
+import {Entypo, MaterialIcons} from "@expo/vector-icons"
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 // v9 compat packages are API compatible with v8 code
 import firebase from 'firebase/compat/app';
@@ -67,8 +66,9 @@ export default function HomeScreen({navigation}) {
                           <Text style={styles.title}>Daily Quote Board</Text>
                           <MaterialIcons name="library-add" color={themecolor} size={32} style={{paddingTop: 40}}/>                                             
                         </TouchableOpacity>
-                        <TouchableOpacity style={{flexDirection: 'row'}} onPress={() => signOutUser()}>
-                          <MaterialIcons name="library-add" color={themecolor} size={32} style={{paddingTop: 40}}/>                                             
+                        <TouchableOpacity style={{flexDirection: 'row', alignContent: 'center'}} onPress={() => signOutUser()}>
+                          <Text style={styles.text}>Sign Out</Text>
+                          <Entypo name="log-out" color={themecolor} size={18} style={{paddingTop: 40}}/>                                             
                         </TouchableOpacity>
                         <Text style={styles.text}>
                             This quote board contains reccomended quotes by other users, and can be manually inputted.
