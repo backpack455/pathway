@@ -34,6 +34,7 @@ export default class SignupScreen extends React.Component{
           firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
               console.log("user is signed in");
+              //this is where you should create the document
             } else {
               console.log("user is not signed in");
               errorMessage = true;
