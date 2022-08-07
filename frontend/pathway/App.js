@@ -14,6 +14,7 @@ import LoginScreen from "./screens/auth/LoginScreen";
 import SignupScreen from "./screens/auth/SignupScreen";
 import SplashScreen from "./screens/auth/SplashScreen";
 import QuoteGeneratorPage from './screens/main/QuoteGenerator'
+import AddQuotePage from './screens/main/AddQuotePage'
 
 // v9 compat packages are API compatible with v8 code
 import firebase from 'firebase/compat/app';
@@ -28,17 +29,49 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-
-
 const inactiveColor = "#8E8E8E";
 const themecolor = "#28407E";
 const tabcolor = "#fff";
 const Tab = createMaterialBottomTabNavigator();
 const Home = createMaterialTopTabNavigator();
+const QuoteStack = createStackNavigator();
 const Motivation = createStackNavigator();
 const TherapyRecomender = createStackNavigator();
 const TherapyFinder = createStackNavigator();
 const Auth = createStackNavigator();
+
+// const Quotes = () => {
+//   return (
+//     <QuoteStack.Navigator
+//       screenOptions={{
+//         headerShown: false,
+//         headerStyle: {
+//           backgroundColor: themecolor,
+//         },
+//         headerTintColor: "#fff",
+//         headerTitleStyle: {
+//           color: "#fff",
+//         },
+//       }}
+//       initialRouteName="Dashboard"
+//     >
+//       <QuoteStack.Screen
+//         name="Dashboard"
+//         component={HomePage}
+//         options={{
+//           headerBackTitleVisible: false,
+//         }}
+//       />
+//       <QuoteStack.Screen
+//         name="Add a Quote"
+//         component={AddQuotePage}
+//         options={{
+//           headerBackTitleVisible: false,
+//         }}
+//       />
+//     </QuoteStack.Navigator>
+//   );
+// };
 
 const TherapyRecomenderScreens = ({ navigation }) => {
   return (
@@ -87,11 +120,18 @@ const Homes = () => {
           color: "#fff",
         },
       }}
-      initialRouteName="Dashboard"
+      initialRouteName="Quotes"
     >
       <Motivation.Screen
-        name="Dashboard"
+        name="Quotes"
         component={HomeScreens}
+        options={{
+          headerBackTitleVisible: false,
+        }}
+      />
+      <QuoteStack.Screen
+        name="Add a Quote"
+        component={AddQuotePage}
         options={{
           headerBackTitleVisible: false,
         }}
@@ -129,6 +169,7 @@ const HomeScreens = ({ navigation }) => {
           headerTintColor: '#fff',
         },
       }}
+      
     >
       <Home.Screen
         name="Home Screen"
@@ -176,7 +217,7 @@ function MainTabs() {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName="Dashboard"
+        initialRouteName="Home Nav"
         sceneAnimationEnabled="true"
         activeColor={tabcolor}
         inactiveColor={inactiveColor}

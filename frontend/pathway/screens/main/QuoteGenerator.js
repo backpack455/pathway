@@ -14,7 +14,7 @@ const themecolor = '#28407E'
 
 
 export default function QuoteGenerator() {
-    const [category, setCategory] = useState()
+    const [category, setCategory] = useState('')
     const [author, setAuthor] = useState()
     const [quote, setQuote] = useState();
 
@@ -94,9 +94,9 @@ export default function QuoteGenerator() {
                                         <Text style={styles.otherText}>Love</Text>
                                     </View>
                                 </TouchableOpacity>
-                                <TouchableOpacity activeOpacity={1}  onPress={() => fetchQuote('famous-quotes')}>
+                                <TouchableOpacity activeOpacity={1}  onPress={() => fetchQuote('sports')}>
                                     <View style={styles.lesserButton}>
-                                        <Text style={styles.otherText}>Famous</Text>
+                                        <Text style={styles.otherText}>Sports</Text>
                                     </View>
                                 </TouchableOpacity>
                             </View>
@@ -113,9 +113,9 @@ export default function QuoteGenerator() {
                                 </TouchableOpacity>
                             </View>
                             <View style={{flexDirection: 'row'}}>
-                                <TouchableOpacity activeOpacity={1}  onPress={() => fetchQuote('art')}>
+                                <TouchableOpacity activeOpacity={1}  onPress={() => fetchQuote('competition')}>
                                     <View style={styles.lesserButton}>
-                                        <Text style={styles.otherText}>Art</Text>
+                                        <Text style={styles.otherText}>Competition</Text>
                                     </View>
                                 </TouchableOpacity>
                                 <TouchableOpacity activeOpacity={1}  onPress={() => fetchQuote('happiness')}>

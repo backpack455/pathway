@@ -101,7 +101,7 @@ export default class TherapyResponse extends React.Component {
 
 class Star extends React.Component {
     render(){
-        return <FontAwesome name={this.props.filled === true ? "star": "star-o"} color="blue" size={32} style={{marginHorizontal: 6}}/>
+        return <FontAwesome name={this.props.filled === true ? "star": "star-o"} color={themecolor} size={32} style={{marginHorizontal: 6}}/>
     }
 }
 

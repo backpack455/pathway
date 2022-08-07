@@ -20,30 +20,24 @@ export default class SignupScreen extends React.Component{
         password: "",
         errorMessage: null,
     }
-    handleSubmit = async ({ email, password, fullName }) => {
-        try {
-          firebase
+    handleSignUp = () => {
+        firebase 
             .auth()
             .createUserWithEmailAndPassword(this.state.email, this.state.password)
-            .then((userCredentials) => {
-              return userCredentials.user.updateProfile({
-                displayName: fullName,
-              });
+            .then(userCredentials => {
+               return userCredentials.user.updateProfile({
+                   displayName: this.state.name
+               })
             })
-            .catch((error) => this.setState({errorMessage: error.message}));
-          firebase.auth().onAuthStateChanged(function (user) {
-            if (user) {
-              console.log("user is signed in");
-              //this is where you should create the document
-            } else {
-              console.log("user is not signed in");
-              errorMessage = true;
-            }
-          });
-        } catch (error) {
-          console.error(error);
-        }
-      };
+            .catch (error => this.setState({errorMessage: error.message}))
+            firebase.auth().onAuthStateChanged(function(user) {
+                if (user) {
+                 console.log('user is signed in')
+                } else {
+                 console.log('user is not signed in')
+                }
+              });
+    }
 
     render(){
         return(

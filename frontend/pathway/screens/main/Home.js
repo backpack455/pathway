@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StatusBar } from 'expo-status-bar';
+import {MaterialIcons} from "@expo/vector-icons"
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -7,35 +8,65 @@ import {
 import { Animated, Easing, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import {FontAwesome} from "@expo/vector-icons"
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+// v9 compat packages are API compatible with v8 code
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
 
 const category = '33'
 const themecolor = '#28407E'
+let pending = true
 
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
+  const [loading, setLoading] = useState(true)
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    firebase.firestore()
+    .collection('Quote Post Board')
+    .get()
+    .then(querySnapshot => {
+      // console.log(querySnapshot.data())
+      const users = []
+      if(querySnapshot.size > 0)
+      {
+       pending = false
+      }
+    querySnapshot.forEach(documentSnapshot => {
+      users.push({
+        ...documentSnapshot.data()
+      })
+      console.log(documentSnapshot.data())
+      console.log(documentSnapshot.data().author)
+    })
+    setUsers(users);
+    console.log(users.author)
+    setLoading(false);
+    })
+}, [])
+
   return (
     <View style={styles.container}>
       <View style={styles.container}>
                 <View>
-                    <TouchableOpacity style={styles.bubble}>
-                        <Text style={styles.title}>Daily Quote Board</Text>
-                        <View style={{flexDirection: 'row'}}>
-                          <Text style={styles.text}>
-                              This quote board contains reccomended quotes by other users, and can be manually inputted.
-                          </Text>                        
-                        </View>
-                        
-                        <TouchableOpacity activeOpacity={1}>
-                            <View style={styles.theButton}>
-                                <Text style={styles.whiteText}>Access Resource</Text>
-                            </View>
+                    <View style={styles.bubble}>
+                        <TouchableOpacity style={{flexDirection: 'row'}} onPress={() => navigation.navigate('Add a Quote')}>
+                          <Text style={styles.title}>Daily Quote Board</Text>
+                          <MaterialIcons name="library-add" color={themecolor} size={32} style={{paddingTop: 40}}/>                                                  
                         </TouchableOpacity>
-                        <TouchableOpacity activeOpacity={1}>
-                            <View style={styles.theButton}>
-                                <Text style={styles.whiteText}>Submit Feedback</Text>
+                        <Text style={styles.text}>
+                            This quote board contains reccomended quotes by other users, and can be manually inputted.
+                        </Text>    
+                          {users.map((quoteData) => {
+                            <View>
+                              <Text style={styles.title}>{quoteData.author}</Text>
+                              <Text style={styles.text}>
+                                  {quoteData.quote}
+                              </Text>   
                             </View>
-                        </TouchableOpacity>
-                    </TouchableOpacity>
+                          })}                    
+                    </View>
                     
                 </View>
                 
