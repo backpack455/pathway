@@ -87,7 +87,7 @@ export default class TherapyResponse extends React.Component {
                         </TouchableOpacity>
                         <TouchableOpacity activeOpacity={1}>
                             <View style={styles.loginButton}>
-                                <Text style={styles.whiteText}>Submit Feedback</Text>
+                                <Text style={styles.whiteText} >Submit Feedback</Text>
                             </View>
                         </TouchableOpacity>
                     </View>

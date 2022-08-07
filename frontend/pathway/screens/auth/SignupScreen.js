@@ -11,6 +11,22 @@ import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "fir
 
 const auth = getAuth();
 
+import {initializeApp} from 'firebase/app'
+import { getFirestore, doc, setDoc } from 'firebase/firestore/lite';
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const data = {
+    behavioral_ratings:   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    body_image_ratings:   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    grief_ratings:        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    relationship_ratings: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    depression_ratings:   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    physical_ratings:     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+}
+
 const themecolor = '#fff'
 const tabcolor = '#28407E'
 export default class SignupScreen extends React.Component{
@@ -27,12 +43,19 @@ export default class SignupScreen extends React.Component{
             .then(userCredentials => {
                return userCredentials.user.updateProfile({
                    displayName: this.state.name
+            
                })
             })
             .catch (error => this.setState({errorMessage: error.message}))
+            
+            
             firebase.auth().onAuthStateChanged(function(user) {
                 if (user) {
                  console.log('user is signed in')
+
+                 const userId = user.uid
+                 const res = setDoc(doc(db, 'userRatings', `${userId}`), data)
+                 
                 } else {
                  console.log('user is not signed in')
                 }

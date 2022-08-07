@@ -18,16 +18,16 @@ CORS(app)
 
 
 #THERAPY DIAGNOSER
-therapy_diagnoser_get_args = reqparse.RequestParser()
-therapy_diagnoser_get_args.add_argument("user_input", help="Please Add Valid Input", required=True, location='form')
-therapy_diagnoser_get_args.add_argument("userRatingId", help="Please Add Bearer Token", required=True, location='headers')
+therapy_diagnoser_post_args = reqparse.RequestParser()
+therapy_diagnoser_post_args.add_argument("user_input", help="Please Add Valid Input", required=True, location='form')
+therapy_diagnoser_post_args.add_argument("userRatingId", help="Please Add Bearer Token", required=True, location='headers')
 
 my_therapy_diagnoser = therapy_diagnoser() 
 
 class therapy_diagnoser(Resource): 
-    def get(self):
+    def post(self):
         
-        user_input = therapy_diagnoser_get_args.parse_args()
+        user_input = therapy_diagnoser_post_args.parse_args()
         category = my_therapy_diagnoser.categorize_problem(user_input['user_input'])
         sentiment = my_therapy_diagnoser.predict_sentiment(user_input['user_input'])
       

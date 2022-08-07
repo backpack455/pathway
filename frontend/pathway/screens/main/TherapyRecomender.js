@@ -15,7 +15,21 @@ import { IconButton } from "react-native-paper";
 import { theme } from "native-base";
 const themecolor = '#28407E'
 
-export default App = ({navigation}) => {
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import Firebasekeys from './../../config'
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+let firebaseConfig = Firebasekeys;
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+
+const auth = getAuth();
+const user = auth.currentUser;
+
+
+
+export default function App({navigation}) {
   const [mapRoutingActive, setMapRoutingActive] = useState();
   const [dilemna, setDilemna] = useState();
 
@@ -24,6 +38,26 @@ export default App = ({navigation}) => {
 
     })();
   }, []);
+  
+  const handleInput = () => {
+    
+    const userId = firebase.auth().currentUser.uid
+    fetch('https://localhost:3001', {
+      method: 'POST',
+      headers: {
+        'userRatingId': userId
+      },
+      body: {
+        'user_input': dilemna
+      }
+    }).then((response) => console.log(response))
+    .catch((error) => {
+      console.log(error)
+    })
+    
+    console.log(userId)
+    //navigation.navigate('Therapy Response Screen')
+  }
 
   return (
     <View style={styles.container}>
@@ -39,7 +73,7 @@ export default App = ({navigation}) => {
           color="#fff"
           size={20}
           style={{ bottom: 5, left: 30 }}
-          onPress={() => navigation.navigate('Therapy Response Screen')}
+          onPress={() => handleInput()}
         />
       </View>
       <View style={styles.response}>
