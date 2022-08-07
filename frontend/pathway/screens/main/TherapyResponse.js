@@ -72,7 +72,7 @@ export default class TherapyResponse extends React.Component {
         return (
             <View style={styles.container}>
                 <View>
-                    <TouchableOpacity style={styles.bubble}>
+                    <View style={styles.bubble}>
                         <Text style={styles.title}>Selected Resource</Text>
                         <Text style={styles.text}>
                             This resource will help deal with the category of {category}. Click below to access the resource. Once you have utilized the resource, please let rate the effectiness of that reosurce on a scale of 1-5. 
@@ -90,7 +90,7 @@ export default class TherapyResponse extends React.Component {
                                 <Text style={styles.whiteText}>Submit Feedback</Text>
                             </View>
                         </TouchableOpacity>
-                    </TouchableOpacity>
+                    </View>
                     
                 </View>
                 

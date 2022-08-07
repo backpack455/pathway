@@ -47,7 +47,6 @@ const TherapyRecomenderScreens = ({ navigation }) => {
         headerShown: true,
         headerStyle: {
           backgroundColor: themecolor,
-          marginTop: 20
         },
         headerTintColor: "#fff",
         headerTitleStyle: {
@@ -82,7 +81,6 @@ const Homes = () => {
         headerShown: true,
         headerStyle: {
           backgroundColor: themecolor,
-          marginTop: 20
         },
         headerTintColor: "#fff",
         headerTitleStyle: {
